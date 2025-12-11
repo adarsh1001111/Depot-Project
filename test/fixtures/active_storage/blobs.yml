@@ -1,0 +1,4 @@
+blob_one: <%= ActiveStorage::FixtureSet.blob filename: 'monster_book.jpeg' %>
+blob_two: <%= ActiveStorage::FixtureSet.blob filename: 'time_turner.jpeg' %>
+
+blob_pragprog: <%= ActiveStorage::FixtureSet.blob filename: 'cauldron_HP.jpg' %>
