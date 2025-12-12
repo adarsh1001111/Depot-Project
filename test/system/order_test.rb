@@ -11,23 +11,25 @@ class OrdersTest < ApplicationSystemTestCase
         assert has_no_field? "Expiration date"
         assert has_no_field? "Po number"
         select "Check", from: "Pay type"
-        assert has_field? "Routing number"
-        assert has_field? "Account number"
-        assert has_no_field? "Credit card number"
-        assert has_no_field? "Expiration date"
-        assert has_no_field? "Po number"
-        select "Credit card", from: "Pay type"
-        assert has_no_field? "Routing number"
-        assert has_no_field? "Account number"
-        assert has_field? "Credit card number"
-        assert has_field? "Expiration date"
-        assert has_no_field? "Po number"
-        select "Purchase order", from: "Pay type"
-        assert has_no_field? "Routing number"
-        assert has_no_field? "Account number"
-        assert has_no_field? "Credit card number"
-        assert has_no_field? "Expiration date"
-        assert has_field? "Po number"
+        assert has_selector?('input[name="order[routing_number]"]', visible: true)
+        assert has_selector?('input[name="order[account_number]"]', visible: true)
+        assert has_no_selector?('input[name="order[credit_card_number]"]', visible: true)
+        assert has_no_selector?('input[name="order[expiration_date]"]', visible: true)
+        assert has_no_selector?('input[name="order[po_number]"]', visible: true)
+
+        select "Credit Card", from: "Pay type"
+        assert has_no_selector?('input[name="order[routing_number]"]', visible: true)
+        assert has_no_selector?('input[name="order[account_number]"]', visible: true)
+        assert has_selector?('input[name="order[credit_card_number]"]', visible: true)
+        assert has_selector?('input[name="order[expiration_date]"]', visible: true)
+        assert has_no_selector?('input[name="order[po_number]"]', visible: true)
+
+        select "Purchase Order", from: "Pay type"
+        assert has_no_selector?('input[name="order[routing_number]"]', visible: true)
+        assert has_no_selector?('input[name="order[account_number]"]', visible: true)
+        assert has_no_selector?('input[name="order[credit_card_number]"]', visible: true)
+        assert has_no_selector?('input[name="order[expiration_date]"]', visible: true)
+        assert has_selector?('input[name="order[po_number]"]', visible: true)
     end
 
     test "check order and delivery" do
@@ -42,11 +44,11 @@ class OrdersTest < ApplicationSystemTestCase
 
         fill_in "Name", with: "Dave Thomas"
         fill_in "Address", with: "123 Main Street"
-        fill_in "Email", with: "dave@example.com"
+        fill_in "E-mail", with: "dave@example.com"
 
         select "Check", from: "Pay type"
-        fill_in "Routing number", with: "123456"
-        fill_in "Account number", with: "987654"
+        fill_in "Routing Number", with: "123456"
+        fill_in "Account Number", with: "987654"
 
         click_button "Place Order"
         assert_text "Thank you for your order"
@@ -72,6 +74,6 @@ class OrdersTest < ApplicationSystemTestCase
         mail.to
         assert_equal "Sam Ruby <depot@example.com>",
         mail[:from].value
-        assert_equal "Pragmatic Store Order Confirmation", mail.subject
+        assert_equal "Spooky Store Order Confirmation", mail.subject
     end
 end
