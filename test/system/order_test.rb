@@ -35,7 +35,7 @@ class OrdersTest < ApplicationSystemTestCase
         Order.delete_all
 
         visit store_index_url
-        
+
         click_on "Add to Cart", match: :first
 
         click_on "Checkout"

@@ -48,7 +48,7 @@ product2.image.attach(io: File.open(
 product3.image.attach(io: File.open(
         Rails.root.join('db', 'images', 'pexels-olenkabohovyk-3819969.jpg') # Actual file_name/path
         ),
-    filename: 'coke.jpg') #ActiveStorage mei this would have this filename i think!!!
+    filename: 'coke.jpg') # ActiveStorage mei this would have this filename i think!!!
 
 product1.save!
 product2.save!

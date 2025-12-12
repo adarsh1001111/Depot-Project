@@ -3,7 +3,7 @@ class CombineItemsInCart < ActiveRecord::Migration[8.1]
     # replace multiple items for a single product in a cart with a
     # single item
     Cart.all.each do |cart|
-    # count the number of each product in the cart
+      # count the number of each product in the cart
       sums = cart.line_items.group(:product_id).sum(:quantity)
 
       sums.each do |product_id, quantity|
@@ -30,7 +30,7 @@ class CombineItemsInCart < ActiveRecord::Migration[8.1]
           quantity: 1
         )
       end
-      
+
       # remove original item
       line_item.destroy
     end

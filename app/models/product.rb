@@ -5,7 +5,7 @@ class Product < ApplicationRecord
 
   has_one_attached :image
   after_commit -> { broadcast_refresh_later_to "products" }
-  #The above line tells Rails to broadcast changes to the product model to any clients that are listening.
+  # The above line tells Rails to broadcast changes to the product model to any clients that are listening.
 
   validates :title, :description, :image, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }
@@ -31,5 +31,4 @@ private
       throw :abort
     end
   end
-  
 end
