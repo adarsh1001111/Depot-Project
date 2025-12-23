@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_11_103234) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_23_065259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,6 +44,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_103234) do
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "line_items_count", default: 0, null: false
     t.datetime "updated_at", null: false
   end
 
@@ -71,6 +72,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_103234) do
   create_table "products", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
+    t.decimal "discount_price"
+    t.boolean "enabled", default: false
+    t.string "permalink"
     t.decimal "price", precision: 8, scale: 2
     t.string "title"
     t.datetime "updated_at", null: false
@@ -87,8 +91,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_11_103234) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "email"
     t.string "email_address", null: false
-    t.string "name", null: false
+    t.text "name", null: false
     t.string "password_digest", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
