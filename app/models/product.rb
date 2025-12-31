@@ -10,14 +10,14 @@ class Product < ApplicationRecord
   # The above line tells Rails to broadcast changes to the product model to any clients that are listening.
 
   validates :title, :description, :image, presence: true
-  validates :price, numericality: { greater_than_or_equal_to: 0.01, greater_than: :discount_price}, allow_nil: true
+  validates :price, numericality: { greater_than_or_equal_to: 0.01, greater_than: :discount_price }, allow_nil: true
   validates :title, uniqueness: true
   validates :title, length: { minimum: 10 }
   validate :acceptable_image
   validates :permalink, uniqueness: true,
     format: { with: PERMALINK_REGEX }
   validates :words_in_description, length: { minimum: 5, maximum: 10 }
-  validates :image_url, url:true
+  validates :image_url, url: true
   validate :ensure_discount_less_than_price
 
   def ensure_discount_less_than_price
@@ -25,7 +25,7 @@ class Product < ApplicationRecord
       errors.add(:price, "price should be greater than discount_price")
     end
   end
-  
+
   def words_in_description
     description&.scan(WORD_REGEX)
   end
