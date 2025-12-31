@@ -1,6 +1,9 @@
 class User < ApplicationRecord
+  EMAIL_REGEX = /\A[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\z/.freeze
   validates :name, presence: true, uniqueness: true
   validates :email_address, presence: true, uniqueness: true
+  validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
+
   has_secure_password
   has_many :sessions, dependent: :destroy
 
