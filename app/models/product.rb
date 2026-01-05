@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
-  PERMALINK_REGEX = /\A[a-zA-Z0-9]+(-[a-zA-Z0-9]+){2,}\z/.freeze
+  PERMALINK_REGEX = /\A\w+(-\w+){2,}\z/.freeze
   WORD_REGEX = /\w+/.freeze
+
   has_many :line_items
 
   before_destroy :ensure_not_referenced_by_any_line_item
@@ -16,21 +17,15 @@ class Product < ApplicationRecord
   validate :acceptable_image
   validates :permalink, uniqueness: true,
     format: { with: PERMALINK_REGEX }
-  validates :words_in_description, length: { minimum: 5, maximum: 10 }
+  validate :words_in_description
   validates :image_url, url: true
+  
+  #custom validator method for price and discount
   validate :ensure_discount_less_than_price
 
-  def ensure_discount_less_than_price
-    unless price > discount_price
-      errors.add(:price, "price should be greater than discount_price")
-    end
-  end
-
-  def words_in_description
-    description&.scan(WORD_REGEX)
-  end
-
   order :title
+
+private
   def acceptable_image
     return unless image.attached?
 
@@ -39,7 +34,21 @@ class Product < ApplicationRecord
       errors.add(:image, "must be a GIF, JPG, PNG or WEBP")
     end
   end
-private
+
+  def ensure_discount_less_than_price
+    if price != nil && price < discount_price
+      errors.add(:price, "price should be greater than discount_price")
+    end
+  end
+
+  def words_in_description
+    unless description.nil?
+      description_words_array = description.scan(WORD_REGEX)
+      
+      return if description_words_array.length.between?(5,10)
+    end
+      errors.add(:description, "description should be between 5 to 10 words")
+  end
 
   # ensure that there are no line items referencing this product
   def ensure_not_referenced_by_any_line_item
