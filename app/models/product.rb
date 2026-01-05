@@ -19,8 +19,8 @@ class Product < ApplicationRecord
     format: { with: PERMALINK_REGEX }
   validate :words_in_description
   validates :image_url, url: true
-  
-  #custom validator method for price and discount
+
+  # custom validator method for price and discount
   validate :ensure_discount_less_than_price
 
   order :title
@@ -44,8 +44,8 @@ private
   def words_in_description
     unless description.nil?
       description_words_array = description.scan(WORD_REGEX)
-      
-      return if description_words_array.length.between?(5,10)
+
+      return if description_words_array.length.between?(5, 10)
     end
       errors.add(:description, "description should be between 5 to 10 words")
   end
