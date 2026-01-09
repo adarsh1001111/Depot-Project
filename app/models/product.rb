@@ -13,8 +13,16 @@ class Product < ApplicationRecord
   validates :title, length: { minimum: 10 }
   validate :acceptable_image
 
+  after_initialize :set_defaults
+
   order :title
-  def acceptable_image
+
+  private def set_defaults
+    self.title = "abc" if title.blank?
+    self.discount_price = self.price if discount_price.blank?
+  end
+
+  private def acceptable_image
     return unless image.attached?
 
     acceptable_types = [ "image/gif", "image/jpeg", "image/png", "image/webp" ]
@@ -22,10 +30,24 @@ class Product < ApplicationRecord
       errors.add(:image, "must be a GIF, JPG, PNG or WEBP")
     end
   end
-private
+
+  private def ensure_discount_less_than_price
+    if price != nil && price < discount_price
+      errors.add(:price, "price should be greater than discount_price")
+    end
+  end
+
+  private def words_in_description
+    unless description.nil?
+      description_words_array = description.scan(WORD_REGEX)
+
+      return if description_words_array.length.between?(5, 10)
+    end
+      errors.add(:description, "description should be between 5 to 10 words")
+  end
 
   # ensure that there are no line items referencing this product
-  def ensure_not_referenced_by_any_line_item
+  private def ensure_not_referenced_by_any_line_item
     unless line_items.empty?
       errors.add(:base, "Line Items present")
       throw :abort
