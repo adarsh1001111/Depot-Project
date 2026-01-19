@@ -2,7 +2,7 @@ require "pago"
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
-  belongs_to :user
+  belongs_to :user, optional: true
 
   enum :pay_type, {
     "Check" => 0,
