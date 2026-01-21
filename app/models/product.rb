@@ -11,16 +11,16 @@ class Product < ApplicationRecord
   after_commit -> { broadcast_refresh_later_to "products" }
   # The above line tells Rails to broadcast changes to the product model to any clients that are listening.
 
-  validates :title, :description, :image, presence: true
-  validates :price, numericality: { greater_than_or_equal_to: 0.01, greater_than: :discount_price }, allow_nil: true
-  validates :title, uniqueness: true
-  validates :title, length: { minimum: 10 }
-  validate :acceptable_image
-  validates :permalink, uniqueness: true,
-    format: { with: PERMALINK_REGEX }
-  validate :words_in_description
-  validates :description, format: { with: FIVE_TO_TEN_WORDS_REGEX }
-  validates :image_url, url: true
+  # validates :title, :description, :image, presence: true
+  # validates :price, numericality: { greater_than_or_equal_to: 0.01, greater_than: :discount_price }, allow_nil: true
+  # validates :title, uniqueness: true
+  # validates :title, length: { minimum: 10 }
+  # validate :acceptable_image
+  # validates :permalink, uniqueness: true,
+  #   format: { with: PERMALINK_REGEX }
+  # validate :words_in_description
+  validates :description, format: { with: FIVE_TO_TEN_WORDS_REGEX, message: "must be between 5 to 10 words long." }, allow_nil: true
+  # validates :image_url, url: true
 
   # custom validator method for price and discount
   validate :ensure_discount_less_than_price, if: -> { price? && discount_price? }
