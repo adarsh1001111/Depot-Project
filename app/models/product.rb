@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   PERMALINK_REGEX = /\A\w+(-\w+){2,}\z/.freeze
   WORD_REGEX = /\w+/.freeze
+  FIVE_TO_TEN_WORDS_REGEX = /\A(\w+\s+){4,9}\w+\z/.freeze
 
   has_many :line_items
 
@@ -18,10 +19,11 @@ class Product < ApplicationRecord
   validates :permalink, uniqueness: true,
     format: { with: PERMALINK_REGEX }
   validate :words_in_description
+  validates :description, format: { with: FIVE_TO_TEN_WORDS_REGEX }
   validates :image_url, url: true
 
   # custom validator method for price and discount
-  validate :ensure_discount_less_than_price
+  validate :ensure_discount_less_than_price, if: -> { price? && discount_price? }
 
   order :title
 
@@ -36,7 +38,7 @@ private
   end
 
   def ensure_discount_less_than_price
-    if price != nil && price < discount_price
+    if price < discount_price
       errors.add(:price, "price should be greater than discount_price")
     end
   end
