@@ -23,7 +23,7 @@ class Product < ApplicationRecord
   validates :image_url, url: true
 
   # custom validator method for price and discount
-  validate :ensure_discount_less_than_price, if: -> { price? && discount_price? }
+  validate :ensure_discount_less_than_price
 
   order :title
 
@@ -38,9 +38,9 @@ private
   end
 
   def ensure_discount_less_than_price
-    if price < discount_price
-      errors.add(:price, "price should be greater than discount_price")
-    end
+    return unless price? && discount_price? && price >= discount_price
+
+    errors.add(:price, "price should be greater than discount_price")
   end
 
   def words_in_description
