@@ -13,7 +13,12 @@ class Product < ApplicationRecord
   validates :title, length: { minimum: 10 }
   validate :acceptable_image
 
+  scope :enabled_products, -> { where(enabled: true) }
+  scope :present_in_line_items, -> { joins(:line_items).distinct }
+  scope :titles_present_in_line_itmes, -> { joins(:line_items).distinct.pluck(:title) }
+
   order :title
+
   def acceptable_image
     return unless image.attached?
 
