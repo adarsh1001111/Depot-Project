@@ -51,4 +51,8 @@ class Order < ApplicationRecord
       raise payment_result.error
     end
   end
+
+  def total_amount
+    line_items.sum(&:total_price)
+  end
 end
