@@ -1,0 +1,47 @@
+<div class="orders-container">
+  <h1 class="page-title">My Orders</h1>
+
+  <% @orders.each do |order| %>
+    <div class="order-card">
+
+      <div class="order-info">
+        <div><strong>Name:</strong> <%= order.name %></div>
+        <div><strong>Address:</strong> <%= order.address %></div>
+        <div><strong>Email:</strong> <%= order.email %></div>
+        <div><strong>Pay type:</strong> <%= order.pay_type %></div>
+      </div>
+
+      <h3 class="items-title">Items</h3>
+
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Quantity</th>
+            <th>Product</th>
+            <th class="text-right">Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% order.line_items.each do |item| %>
+            <tr>
+              <td><%= item.quantity %>x</td>
+              <td><%= item.product.title %></td>
+              <td class="text-right">$<%= item.product.price %></td>
+            </tr>
+          <% end %>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="2" class="total-label">Total Amount</td>
+            <td class="text-right total-amount">
+              $<%= order.total_amount %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+    </div>
+  <% end %>
+</div>

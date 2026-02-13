@@ -63,6 +63,20 @@ class UsersController < ApplicationController
     redirect_to users_url, notice: exception.message
   end
 
+  # GET /users/orders
+  def orders
+    @user = Current.session.user
+    @orders = @user.orders
+  end
+
+  # GET users/line_items
+  def line_items
+    @user = Current.session.user
+    p params
+    @line_items = @user.line_items.includes(:product, :order).order( order_id: :asc)
+      .page(params[:page]).per(5)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
