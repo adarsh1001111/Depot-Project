@@ -73,7 +73,7 @@ class UsersController < ApplicationController
   def line_items
     @user = Current.session.user
     p params
-    @line_items = @user.line_items.includes(:product, :order).order( order_id: :asc)
+    @line_items = @user.line_items.includes(:product, :order).order(order_id: :asc)
       .page(params[:page]).per(5)
   end
 
