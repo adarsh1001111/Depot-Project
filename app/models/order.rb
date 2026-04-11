@@ -2,6 +2,7 @@ require "pago"
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
+  belongs_to :user, optional: true
 
   enum :pay_type, {
     "Check" => 0,
@@ -53,5 +54,9 @@ class Order < ApplicationRecord
     else
       raise payment_result.error
     end
+  end
+
+  def total_amount
+    line_items.sum(&:total_price)
   end
 end

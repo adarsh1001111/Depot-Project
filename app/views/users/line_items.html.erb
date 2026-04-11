@@ -1,0 +1,22 @@
+<div class="line-items-container">
+  <h2 class="page-title">My Line Items</h2>
+
+  <% @line_items.each do |line_item| %>
+    <div class="line-item-card">
+      <div class="line-item-row">
+        <div class="item-info">
+          <h3 class="product-name"><%= line_item.product.title %></h3>
+          <p><strong>Quantity:</strong> <%= line_item.quantity %></p>
+          <p><strong>Order ID:</strong> <%= line_item.order.id %></p>
+        </div>
+
+        <div class="price-info">
+          $<%= line_item.total_price %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="pagination">
+    <%= paginate @line_items %>
+  </div>
+</div>

@@ -9,3 +9,66 @@
 .line-item-highlight {
   animation: line-item-highlight 1s;
 }
+
+/* Center container */
+.line-items-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Title */
+.page-title {
+  font-size: 26px;
+  margin-bottom: 25px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Card */
+.line-item-card {
+  background: #ffffff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+  transition: transform 0.2s ease;
+}
+
+.line-item-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Row layout */
+.line-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Product name */
+.product-name {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Item info */
+.item-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Price */
+.price-info {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2e7d32;
+}
+
+/* Pagination spacing */
+.pagination {
+  margin-top: 30px;
+  text-align: center;
+}

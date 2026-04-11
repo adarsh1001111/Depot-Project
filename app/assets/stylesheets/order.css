@@ -1,0 +1,84 @@
+/* Center whole content */
+.orders-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Title */
+.page-title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Card */
+.order-card {
+  background: #ffffff;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Order info grid */
+.order-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 40px;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.order-info div {
+  padding: 4px 0;
+}
+
+/* Items title */
+.items-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Table */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th,
+.items-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.items-table thead {
+  background: #f8f8f8;
+}
+
+.items-table th {
+  text-align: left;
+  font-weight: 600;
+}
+
+/* Right align price column */
+.text-right {
+  text-align: right;
+}
+
+/* Footer total row */
+.items-table tfoot tr {
+  background: #fafafa;
+}
+
+.total-label {
+  text-align: right;
+  font-weight: 600;
+}
+
+.total-amount {
+  font-weight: 700;
+  font-size: 16px;
+}
