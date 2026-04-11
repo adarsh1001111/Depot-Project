@@ -2,6 +2,7 @@ require "pago"
 
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
+  belongs_to :user, optional: true
 
   enum :pay_type, {
     "Check" => 0,
@@ -11,6 +12,10 @@ class Order < ApplicationRecord
 
   validates :name, :address, :email, presence: true
   validates :pay_type, inclusion: pay_types.keys
+
+  scope :by_date, ->(from = Time.now.midnight, to = Time.now) {
+          where(created_at: from..to)
+        }
 
   def add_line_items_from_cart(cart)
     cart.line_items.each do |item|
@@ -49,5 +54,9 @@ class Order < ApplicationRecord
     else
       raise payment_result.error
     end
+  end
+
+  def total_amount
+    line_items.sum(&:total_price)
   end
 end

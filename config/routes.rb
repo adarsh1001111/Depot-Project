@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   get "admin" => "admin#index"
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :users
+  resources :users do
+    get :orders, on: :collection
+    get :line_items, on: :collection
+  end
+
   resources :products
   resource :session
   resources :passwords, param: :token

@@ -9,7 +9,11 @@
   </div>
   <div>
     <strong class="block font-medium mb-1">Image:</strong>
-    <%= link_to product.image.filename, product.image, class: "text-gray-700 underline hover:no-underline" if product.image.attached? %>
+    <% if product.image.attached? %>
+      <%= image_tag(product.image, class: 'w-32 h-32 object-contain', width: 128, height: 128, style: 'max-width: 128px; max-height: 128px;') %>
+      <br>
+      <%= link_to product.image.filename, product.image, class: "text-gray-700 underline hover:no-underline" %>
+    <% end %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Price:</strong>

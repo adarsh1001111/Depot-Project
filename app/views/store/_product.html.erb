@@ -1,7 +1,12 @@
 <%= turbo_frame_tag(dom_id(product)) do %>
   <li class='flex mb-6'>
-    <%= image_tag(product.image,
-      class: 'object-contain w-40 h-48 shadow mr-6') %>
+    <% if product.image.attached? %>
+      <%= image_tag(product.image,
+        class: 'object-contain shadow mr-6',
+        width: 160,
+        height: 192,
+        style: 'max-width: 160px; max-height: 192px;') %>
+    <% end %>
     <div>
       <h2 class="font-bold text-lg mb-3"><%= product.title %></h2>
       <p>
