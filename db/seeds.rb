@@ -10,46 +10,36 @@
 
 
 Product.delete_all
-# . . .
-product1 = Product.create(title: 'Camera',
-    description:
-        %(<p>
-            <em>Click pictures</em>
-            Good Camera!
-        </p>),
-    price: 30.95)
 
-product2 = Product.create(title: 'Watch',
-    description:
-        %(<p>
-            <em>Watch TIme</em>
-            Good Watch!
-        </p>),
-    price: 40)
-
-product3 = Product.create(title: 'Coca-Cola',
-    description:
-        %(<p>
-            <em>Drink Chilled!</em>
-            Coca-Cola
-        </p>),
-    price: 3)
-
-product1.image.attach(io: File.open(
-        Rails.root.join('db', 'images', 'camera.webp')
-        ),
-    filename: 'camera.webp')
-
-product2.image.attach(io: File.open(
-        Rails.root.join('db', 'images', 'pexels-javon-swaby-197616-2783873.jpg')
-        ),
-    filename: 'watch.jpg')
-
-product3.image.attach(io: File.open(
-        Rails.root.join('db', 'images', 'pexels-olenkabohovyk-3819969.jpg') # Actual file_name/path
-        ),
-    filename: 'coke.jpg') # ActiveStorage mei this would have this filename i think!!!
-
+product1 = Product.new(
+  title: 'Professional DSLR Camera Kit',
+  description: 'High quality DSLR camera with advanced features',
+  price: 599.99,
+  discount_price: 549.99,
+  permalink: 'professional-dslr-camera-kit',
+  image_url: 'https://example.com/camera.webp'
+)
+product1.image.attach(io: File.open(Rails.root.join('db', 'images', 'camera.webp')), filename: 'camera.webp')
 product1.save!
+
+product2 = Product.new(
+  title: 'Elegant Wristwatch for Adults',
+  description: 'Stylish wristwatch perfect for formal occasions',
+  price: 199.99,
+  discount_price: 179.99,
+  permalink: 'elegant-wristwatch-adults',
+  image_url: 'https://example.com/watch.jpeg'
+)
+product2.image.attach(io: File.open(Rails.root.join('db', 'images', 'pexels-javon-swaby-197616-2783873.jpg')), filename: 'watch.jpg')
 product2.save!
+
+product3 = Product.new(
+  title: 'Refreshing Coca-Cola Beverage',
+  description: 'Classic carbonated drink for thirst quenching',
+  price: 2.99,
+  discount_price: 2.49,
+  permalink: 'refreshing-coca-cola-beverage',
+  image_url: 'https://example.com/coke.png'
+)
+product3.image.attach(io: File.open(Rails.root.join('db', 'images', 'pexels-olenkabohovyk-3819969.jpg')), filename: 'coke.jpg')
 product3.save!

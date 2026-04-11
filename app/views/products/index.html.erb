@@ -34,9 +34,11 @@ scroll position.-->
         <tbody>
             <% @products.each do |product| %>
                 <tr class="<%= cycle('bg-green-50', 'bg-white') %>">
-                <td class="px-2 py-3">
-                <%= image_tag(product.image, class: 'w-40') %>
-                </td>
+                    <td class="px-2 py-3">
+                        <% if product.image.attached? %>
+                          <%= image_tag(product.image, class: 'w-40 h-40 object-contain', width: 160, height: 160, style: 'max-width: 160px; max-height: 160px;') %>
+                        <% end %>
+                    </td>
                     <td>
                         <h1 class="text-xl font-bold"><%= product.title %></h1>
                         <p class="my-3">
