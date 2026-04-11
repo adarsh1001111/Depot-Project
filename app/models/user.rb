@@ -1,7 +1,10 @@
 class User < ApplicationRecord
   DEPOT_ADMIN_MAIL = "admin@depot.com".freeze
+  EMAIL_REGEX = /\A[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}\z/.freeze
   validates :name, presence: true, uniqueness: true
   validates :email_address, presence: true, uniqueness: true
+  validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
+
   has_secure_password
   has_many :sessions, dependent: :destroy
 
