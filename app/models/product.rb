@@ -48,7 +48,7 @@ class Product < ApplicationRecord
     if images.attached?
       images
     elsif image.attached?
-      [image]
+      [ image ]
     else
       []
     end

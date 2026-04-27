@@ -3,7 +3,7 @@ module ProductsHelper
     categories = Category.includes(:category).order(:name)
     categories.map do |category|
       label = category.category.present? ? "#{category.category.name} > #{category.name}" : category.name
-      [label, category.id]
+      [ label, category.id ]
     end
   end
 end
