@@ -9,6 +9,8 @@
 #   end
 
 
+LineItem.delete_all
+LineItem.delete_all
 Product.delete_all
 
 product1 = Product.new(
@@ -19,7 +21,7 @@ product1 = Product.new(
   permalink: 'professional-dslr-camera-kit',
   image_url: 'https://example.com/camera.webp'
 )
-product1.image.attach(io: File.open(Rails.root.join('db', 'images', 'camera.webp')), filename: 'camera.webp')
+product1.images.attach(io: File.open(Rails.root.join('db', 'images', 'camera.webp')), filename: 'camera.webp')
 product1.save!
 
 product2 = Product.new(
@@ -30,7 +32,7 @@ product2 = Product.new(
   permalink: 'elegant-wristwatch-adults',
   image_url: 'https://example.com/watch.jpeg'
 )
-product2.image.attach(io: File.open(Rails.root.join('db', 'images', 'pexels-javon-swaby-197616-2783873.jpg')), filename: 'watch.jpg')
+product2.images.attach(io: File.open(Rails.root.join('db', 'images', 'pexels-javon-swaby-197616-2783873.jpg')), filename: 'watch.jpg')
 product2.save!
 
 product3 = Product.new(
@@ -41,5 +43,5 @@ product3 = Product.new(
   permalink: 'refreshing-coca-cola-beverage',
   image_url: 'https://example.com/coke.png'
 )
-product3.image.attach(io: File.open(Rails.root.join('db', 'images', 'pexels-olenkabohovyk-3819969.jpg')), filename: 'coke.jpg')
+product3.images.attach(io: File.open(Rails.root.join('db', 'images', 'pexels-olenkabohovyk-3819969.jpg')), filename: 'coke.jpg')
 product3.save!

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  layout "myorders", only: %i[orders line_items]
   before_action :set_user, only: %i[ show edit update destroy ]
 
   # GET /users or /users.json
@@ -13,10 +14,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.build_address
   end
 
   # GET /users/1/edit
   def edit
+    @user.build_address unless @user.address
   end
 
   # POST /users or /users.json
@@ -85,6 +88,7 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email_address, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email_address, :email, :password,
+        :password_confirmation, address_attributes: [ :state, :city, :country, :pincode ] ])
     end
 end

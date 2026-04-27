@@ -9,6 +9,10 @@ class User < ApplicationRecord
   has_secure_password
   has_many :sessions, dependent: :destroy
   has_many :line_items, through: :orders
+  has_one :address, dependent: :destroy
+  accepts_nested_attributes_for :address
+
+  validates :address, presence: true
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
   after_destroy :ensure_an_admin_remains

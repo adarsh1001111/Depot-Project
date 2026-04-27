@@ -7,6 +7,61 @@
 
   <h1 class="font-bold text-4xl">Showing product</h1>
 
+  <% if @product.all_images.present? %>
+    <div id="product-slider" class="relative bg-gray-100 rounded-xl overflow-hidden mt-6 mb-6">
+      <div class="slider-images">
+        <% @product.all_images.each_with_index do |image, index| %>
+          <div class="slide <%= 'hidden' unless index.zero? %>" data-slide-index="<%= index %>">
+            <%= image_tag(image, class: 'w-full h-auto object-contain', style: 'max-height: 480px; width: 100%;') %>
+          </div>
+        <% end %>
+      </div>
+
+      <button id="prev-slide" type="button" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 rounded-full bg-black text-black px-4 py-2 hover:bg-gray-900 transition-colors font-medium shadow-lg ring-1 ring-white">‹ Prev</button>
+      <button id="next-slide" type="button" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 rounded-full bg-black text-black px-4 py-2 hover:bg-gray-900 transition-colors font-medium shadow-lg ring-1 ring-white">Next ›</button>
+    </div>
+
+    <script>
+      function initProductSlider() {
+        const slides = document.querySelectorAll('#product-slider .slide');
+        const prevButton = document.getElementById('prev-slide');
+        const nextButton = document.getElementById('next-slide');
+        let current = 0;
+
+        if (!slides.length || !prevButton || !nextButton) {
+          return;
+        }
+
+        if (slides.length <= 1) {
+          prevButton.style.display = 'none';
+          nextButton.style.display = 'none';
+          return;
+        }
+
+        function showSlide(index) {
+          slides.forEach((slide, idx) => {
+            slide.classList.toggle('hidden', idx !== index);
+          });
+        }
+
+        prevButton.addEventListener('click', function() {
+          current = (current - 1 + slides.length) % slides.length;
+          showSlide(current);
+        });
+
+        nextButton.addEventListener('click', function() {
+          current = (current + 1) % slides.length;
+          showSlide(current);
+        });
+
+        showSlide(current);
+      }
+
+      document.addEventListener('DOMContentLoaded', initProductSlider);
+      document.addEventListener('turbo:load', initProductSlider);
+    </script>
+  <% end %>
+
   <%= render @product %>
 
   <%= link_to "Edit this product", edit_product_path(@product), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>

@@ -22,8 +22,35 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :image %>
-    <%= form.file_field :image, accept: "image/*", class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:image].none?, "border-red-400 focus:outline-red-600": product.errors[:image].any?}] %>
+    <%= form.label :category_id, "Category" %>
+    <%= form.select :category_id,
+      options_for_select(category_options_for_select, product.category_id),
+      { include_blank: "Select One" },
+      class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:category].none? && product.errors[:category_id].none?, "border-red-400 focus:outline-red-600": product.errors[:category].any? || product.errors[:category_id].any?}] %>
+  </div>
+
+  <% if product.all_images.present? %>
+    <div class="my-5">
+      <label class="block font-medium mb-2">Current Images</label>
+      <div class="grid grid-cols-3 gap-4">
+        <% product.all_images.each do |image| %>
+          <div class="relative">
+            <%= image_tag(image, class: "w-full h-32 object-cover rounded border") %>
+            <div class="absolute top-1 right-1">
+              <%= link_to "Remove", remove_image_product_path(product, image_id: image.id),
+                method: :delete, data: { confirm: "Are you sure?" },
+                class: "bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :images, "Add More Images" %>
+    <%= form.file_field :images, multiple: true, accept: "image/*", class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:images].none?, "border-red-400 focus:outline-red-600": product.errors[:images].any?}] %>
+    <p class="text-sm text-gray-500 mt-2">You can upload up to 3 images total. New images will be added to existing ones.</p>
   </div>
 
   <div class="my-5">

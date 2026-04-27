@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     get :line_items, on: :collection
   end
 
-  resources :products
+  resources :products do
+    delete :remove_image, on: :member
+  end
   resource :session
   resources :passwords, param: :token
 

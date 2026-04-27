@@ -17,61 +17,12 @@ scroll position.-->
     <h1 class="mx-auto font-bold text-4xl">Products</h1>
 </div>
 
-    <table id="products" class="mx-auto">
-        <tfoot>
-            <tr>
-                <td colspan="3">
-                    <div class="mt-8">
-                        <%= link_to 'New product',
-                            new_product_path,
-                            class: "inline rounded-lg py-3 px-5 bg-green-600
-                                text-white block font-medium" %>
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
+  <div class="grid gap-6">
+    <%= render partial: 'product_listing', collection: @products, as: :product %>
+  </div>
 
-        <tbody>
-            <% @products.each do |product| %>
-                <tr class="<%= cycle('bg-green-50', 'bg-white') %>">
-                    <td class="px-2 py-3">
-                        <% if product.image.attached? %>
-                          <%= image_tag(product.image, class: 'w-40 h-40 object-contain', width: 160, height: 160, style: 'max-width: 160px; max-height: 160px;') %>
-                        <% end %>
-                    </td>
-                    <td>
-                        <h1 class="text-xl font-bold"><%= product.title %></h1>
-                        <p class="my-3">
-                            <%= truncate(strip_tags(product.description),
-                            length: 80) %>
-                        </p>
-                        <p>
-                            <%= number_to_currency(product.price) %>
-                        </p>
-                    </td>
-                    <td class="px-3">
-                        <ul>
-                            <li>
-                                <%= link_to 'Show',
-                                    product,
-                                    class: 'hover:underline' %>
-                            </li>
-                            <li>
-                                <%= link_to 'Edit',
-                                    edit_product_path(product),
-                                    class: 'hover:underline' %>
-                            </li>
-                            <li>
-                                <%= button_to 'Destroy',
-                                    product,
-                                    method: :delete,
-                                    class: 'hover:underline',
-                                    data: { turbo_confirm: "Are you sure?" } %>
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
+  <div class="mt-8">
+    <%= link_to 'New product', new_product_path,
+      class: "inline rounded-lg py-3 px-5 bg-green-600 text-white block font-medium" %>
+  </div>
 </div>

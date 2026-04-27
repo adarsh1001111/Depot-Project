@@ -4,6 +4,18 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @products = Product.all
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: @products.map { |product|
+          {
+            name: product.title,
+            category: product.category&.name
+          }
+        }
+      end
+    end
   end
 
   # GET /products/1 or /products/1.json
@@ -38,12 +50,20 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1 or /products/1.json
   def update
     respond_to do |format|
-      if @product.update(product_params)
+      # Handle images separately to append rather than replace
+      product_params_hash = product_params.to_h
+      if params[:product][:images].present?
+        # Append new images to existing ones
+        @product.images.attach(params[:product][:images])
+        product_params_hash.delete(:images)
+      end
+
+      if @product.update(product_params_hash)
         format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @product }
 
-      @product.broadcast_replace_later_to "store/products",
-        partial: "store/product"
+        @product.broadcast_replace_later_to "store/products",
+          partial: "store/product"
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -61,6 +81,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  # DELETE /products/1/remove_image
+  def remove_image
+    image = @product.images.find(params[:image_id])
+    image.purge
+    redirect_to edit_product_path(@product), notice: "Image removed successfully."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
@@ -69,6 +96,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.expect(product: [ :title, :description, :image, :price ])
+      params.expect(product: [ :title, :description, :price, :discount_price,
+        :enabled, :permalink, :image_url, :category_id ])
     end
 end

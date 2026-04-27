@@ -9,14 +9,14 @@ class ProductTest < ActiveSupport::TestCase
     assert product.errors[:title].any?
     assert product.errors[:description].any?
     assert product.errors[:price].any?
-    assert product.errors[:image].any?
+    assert product.errors[:images].any?
   end
 
   test "product price must be positive" do
     product = Product.new(title:
       "My Book Title",
       description: "yyy")
-    product.image.attach(io: File.open("db/images/time_turner.jpeg"),
+    product.images.attach(io: File.open("db/images/time_turner.jpeg"),
       filename: "time_turner.jpeg", content_type: "image/jpeg")
 
     product.price = -1
@@ -40,7 +40,7 @@ class ProductTest < ActiveSupport::TestCase
       description: "yyy",
       price: 1
     ).tap do |product|
-      product.image.attach(
+      product.images.attach(
         io: File.open("test/fixtures/files/#{filename}"), filename:, content_type:)
     end
   end
@@ -56,7 +56,7 @@ class ProductTest < ActiveSupport::TestCase
       products(:pragprog).title,
       description: "yyy",
       price: 1)
-    product.image.attach(io: File.open("db/images/monster_book.jpeg"),
+    product.images.attach(io: File.open("db/images/monster_book.jpeg"),
       filename: "monster_book.jpeg", content_type: "image/jpeg")
     assert product.invalid?
     assert_equal [ I18n.translate("errors.messages.taken") ],

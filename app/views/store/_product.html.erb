@@ -1,7 +1,7 @@
 <%= turbo_frame_tag(dom_id(product)) do %>
   <li class='flex mb-6'>
-    <% if product.image.attached? %>
-      <%= image_tag(product.image,
+    <% if product.all_images.present? %>
+      <%= image_tag(product.all_images.first,
         class: 'object-contain shadow mr-6',
         width: 160,
         height: 192,

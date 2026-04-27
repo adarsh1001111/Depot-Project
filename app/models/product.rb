@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :category, counter_cache: true
   has_one_attached :image
+  has_many_attached :images
   has_many :line_items, dependent: :restrict_with_error
   has_many :carts, through: :line_items
   PERMALINK_REGEX = /\A\w+(-\w+){2,}\z/.freeze
@@ -14,11 +15,13 @@ class Product < ApplicationRecord
   after_commit -> { broadcast_refresh_later_to "products" }
   # The above line tells Rails to broadcast changes to the product model to any clients that are listening.
 
-  validates :title, :description, :image, presence: true
+  validates :title, :description, presence: true
+  validates :category, presence: { message: "must be selected" }
   validates :price, numericality: { greater_than_or_equal_to: 0.01, greater_than: :discount_price }, allow_nil: true
   validates :title, uniqueness: true
   validates :title, length: { minimum: 10 }
-  validate :acceptable_image
+  validate :images_presence
+  validate :acceptable_images
   validates :permalink, uniqueness: true,
     format: { with: PERMALINK_REGEX }
   validate :words_in_description
@@ -41,12 +44,33 @@ class Product < ApplicationRecord
     self.discount_price = self.price if discount_price.blank?
   end
 
-  private def acceptable_image
-    return unless image.attached?
+  def all_images
+    if images.attached?
+      images
+    elsif image.attached?
+      [image]
+    else
+      []
+    end
+  end
+
+  private def images_presence
+    errors.add(:images, "must be attached") unless image.attached? || images.attached?
+  end
+
+  private def acceptable_images
+    return unless image.attached? || images.attached?
+
+    all_images = self.all_images
+    if all_images.count > 3
+      errors.add(:images, "cannot be more than 3")
+    end
 
     acceptable_types = [ "image/gif", "image/jpeg", "image/png", "image/webp" ]
-    unless acceptable_types.include?(image.content_type)
-      errors.add(:image, "must be a GIF, JPG, PNG or WEBP")
+    all_images.each do |image_attachment|
+      unless acceptable_types.include?(image_attachment.content_type)
+        errors.add(:images, "must be a GIF, JPG, PNG or WEBP")
+      end
     end
   end
 

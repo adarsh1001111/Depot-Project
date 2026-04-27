@@ -55,6 +55,31 @@
     class: "input-field" %>
   </div>
 
+  <fieldset class="border border-gray-200 rounded-md p-4 my-5">
+    <legend class="font-semibold">Address</legend>
+    <%= form.fields_for :address do |address_form| %>
+      <div class="my-4">
+        <%= address_form.label :state %>
+        <%= address_form.text_field :state, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+      </div>
+
+      <div class="my-4">
+        <%= address_form.label :city %>
+        <%= address_form.text_field :city, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+      </div>
+
+      <div class="my-4">
+        <%= address_form.label :country %>
+        <%= address_form.text_field :country, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+      </div>
+
+      <div class="my-4">
+        <%= address_form.label :pincode %>
+        <%= address_form.text_field :pincode, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+      </div>
+    <% end %>
+  </fieldset>
+
   <div class="inline">
     <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   </div>
