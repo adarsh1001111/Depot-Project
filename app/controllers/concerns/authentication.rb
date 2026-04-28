@@ -50,7 +50,7 @@ module Authentication
     end
 
     def after_authentication_url
-      if Current.user&.role == 'admin'
+      if Current.user&.role == "admin"
         admin_reports_path
       else
         session.delete(:return_to_after_authenticating) || store_index_path

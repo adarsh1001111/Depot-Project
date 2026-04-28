@@ -1,5 +1,4 @@
 class Admin::ReportsController < Admin::BaseController
-
   def index
     @start_date = params[:start_date].presence || 5.days.ago.to_date
     @end_date = params[:end_date].presence || Date.current

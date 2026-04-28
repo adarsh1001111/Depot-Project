@@ -34,6 +34,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_response_time_header
-    response.headers['x-responded-in'] = "#{(Time.now - @start_time) * 1000}ms" if @start_time
+    response.headers["x-responded-in"] = "#{(Time.now - @start_time) * 1000}ms" if @start_time
   end
 end
