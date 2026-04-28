@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_28_025801) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_28_034000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -104,6 +104,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_025801) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "product_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.decimal "value", precision: 2, scale: 1, null: false
+    t.index ["product_id"], name: "index_ratings_on_product_id"
+    t.index ["user_id", "product_id"], name: "index_ratings_on_user_id_and_product_id", unique: true
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "ip_address"
@@ -117,7 +128,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_025801) do
     t.datetime "created_at", null: false
     t.string "email"
     t.string "email_address", null: false
-    t.string "language", default: "en", null: false
+    t.string "language"
     t.text "name", null: false
     t.string "password_digest", null: false
     t.string "role"
@@ -133,5 +144,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_025801) do
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
+  add_foreign_key "ratings", "products"
+  add_foreign_key "ratings", "users"
   add_foreign_key "sessions", "users"
 end

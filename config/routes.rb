@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
     resources :products, path: "books" do
       delete :remove_image, on: :member
+      resource :rating, only: :create
     end
 
     resource :session

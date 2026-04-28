@@ -4,6 +4,7 @@ class Product < ApplicationRecord
   has_many_attached :images
   has_many :line_items, dependent: :restrict_with_error
   has_many :carts, through: :line_items
+  has_many :ratings, dependent: :destroy
   PERMALINK_REGEX = /\A\w+(-\w+){2,}\z/.freeze
   WORD_REGEX = /\w+/.freeze
   FIVE_TO_TEN_WORDS_REGEX = /\A(\w+\s+){4,9}\w+\z/.freeze
@@ -38,6 +39,10 @@ class Product < ApplicationRecord
   scope :titles_present_in_line_items, -> { joins(:line_items).distinct.pluck(:title) }
 
   order :title
+
+  def average_rating
+    ratings.average(:value).to_f.round(1)
+  end
 
   private def set_defaults
     self.title = "abc" if title.blank?

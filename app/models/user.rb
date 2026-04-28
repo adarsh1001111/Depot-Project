@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :orders, dependent: :destroy
+  has_many :ratings, dependent: :destroy
   DEPOT_ADMIN_MAIL = "admin@depot.com".freeze
   EMAIL_REGEX = /\A[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}\z/.freeze
   validates :name, presence: true, uniqueness: true

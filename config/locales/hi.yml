@@ -111,6 +111,13 @@ hi:
       english: "अंग्रेज़ी"
       hindi: "हिंदी"
 
+  ratings:
+    label: "इस उत्पाद को रेट करें"
+    submit: "रेटिंग सबमिट करें"
+    messages:
+      saved: "रेटिंग सफलतापूर्वक सेव हो गई।"
+      failed: "रेटिंग सेव नहीं हो सकी।"
+
   flash:
     application:
       translation_not_available: "%{locale} भाषा उपलब्ध नहीं है"
