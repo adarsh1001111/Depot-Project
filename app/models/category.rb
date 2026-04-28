@@ -20,14 +20,14 @@ class Category < ApplicationRecord
     if subcategories.any?
       self.subcategories.each do |s|
         if s.subcategories.any?
-          errors.add(:base, "cannot add category to a root category having subcategories")
+          errors.add(:base, :root_category_with_subcategories)
           return
         end
       end
     end
 
-    errors.add(:base, "subcategory cannot have any child category") if subcategories.any? && category_id?
+    errors.add(:base, :subcategory_cannot_have_children) if subcategories.any? && category_id?
 
-    errors.add(:base, "cannot add subcategory to a subcategory") if category_id? && category.category_id?
+    errors.add(:base, :cannot_add_subcategory_to_subcategory) if category_id? && category.category_id?
   end
 end

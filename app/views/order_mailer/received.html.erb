@@ -1,5 +1,31 @@
-<h1>Order#received</h1>
+<h1><%= t('order_mailer.received.subject') %></h1>
 
 <p>
-  <%= @greeting %>, find me in app/views/order_mailer/received.html.erb
+  <%= t('order_mailer.received.greeting', name: @order.name) %>
 </p>
+
+<p>
+  <%= t('order_mailer.received.thank_you') %>
+</p>
+
+<h2><%= t('order_mailer.received.order_details') %></h2>
+
+<% @order.line_items.each_with_index do |item, index| %>
+  <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+    <h3><%= t('order_mailer.received.line_item', index: index + 1) %></h3>
+    <p><strong><%= t('order_mailer.received.product', title: item.product.title) %></strong></p>
+    <p><%= t('order_mailer.received.quantity', quantity: item.quantity) %></p>
+    <p><%= t('order_mailer.received.price', price: number_to_currency(item.product.price)) %></p>
+    <p><%= t('order_mailer.received.total', total: number_to_currency(item.total_price)) %></p>
+
+    <% if @line_item_inline_images[item.id].present? %>
+      <%= image_tag attachments[@line_item_inline_images[item.id]].url, style: 'max-width: 200px; max-height: 200px;' %>
+    <% end %>
+  </div>
+<% end %>
+
+<p><strong><%= t('order_mailer.received.total', total: number_to_currency(@order.total_amount)) %></strong></p>
+
+<% if @order.line_items.any? { |item| item.product.images.attached? && item.product.images.size > 1 } %>
+  <p><%= t('order_mailer.received.attachments') %></p>
+<% end %>

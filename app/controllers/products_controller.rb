@@ -37,7 +37,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: "Product was successfully created." }
+        format.html { redirect_to @product, notice: t("flash.products.created") }
         format.json { render :show, status: :created, location: @product }
       else
         puts @product.errors.full_messages
@@ -59,7 +59,7 @@ class ProductsController < ApplicationController
       end
 
       if @product.update(product_params_hash)
-        format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
+        format.html { redirect_to @product, notice: t("flash.products.updated"), status: :see_other }
         format.json { render :show, status: :ok, location: @product }
 
         @product.broadcast_replace_later_to "store/products",
@@ -76,7 +76,7 @@ class ProductsController < ApplicationController
     @product.destroy!
 
     respond_to do |format|
-      format.html { redirect_to products_path, notice: "Product was successfully destroyed.", status: :see_other }
+      format.html { redirect_to products_path, notice: t("flash.products.destroyed"), status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -85,7 +85,7 @@ class ProductsController < ApplicationController
   def remove_image
     image = @product.images.find(params[:image_id])
     image.purge
-    redirect_to edit_product_path(@product), notice: "Image removed successfully."
+    redirect_to edit_product_path(@product), notice: t("flash.products.image_removed")
   end
 
   private

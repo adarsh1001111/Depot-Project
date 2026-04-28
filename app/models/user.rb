@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :email_address, presence: true, uniqueness: true
   validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
+  validates :language, inclusion: { in: %w[en hi] }
 
   has_secure_password
   has_many :sessions, dependent: :destroy
@@ -22,7 +23,13 @@ class User < ApplicationRecord
   before_destroy :check_depot_admin
   before_update :check_depot_admin
 
+  before_validation :set_default_language
+
   class Error < StandardError
+  end
+
+  private def set_default_language
+    self.language ||= "en"
   end
 
   private def check_depot_admin

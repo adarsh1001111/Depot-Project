@@ -1,0 +1,14 @@
+<%= t("order_mailer.consolidated_summary.greeting", name: @user.name) %>
+
+<%= t("order_mailer.consolidated_summary.summary") %>
+
+<% @orders.each do |order| %>
+<%= t("order_mailer.consolidated_summary.order", id: order.id, date: l(order.created_at.to_date)) %>
+<% order.line_items.each do |item| %>
+- <%= item.product.title %> | <%= t("order_mailer.received.quantity", quantity: item.quantity) %> | <%= t("order_mailer.received.price", price: number_to_currency(item.product.price)) %> | <%= t("order_mailer.received.total", total: number_to_currency(item.total_price)) %>
+<% end %>
+<%= t("order_mailer.received.total", total: number_to_currency(order.total_amount)) %>
+
+<% end %>
+
+<%= t("order_mailer.consolidated_summary.total_orders", count: @orders.count) %>

@@ -1,0 +1,21 @@
+<h1><%= t("order_mailer.consolidated_summary.subject") %></h1>
+
+<p><%= t("order_mailer.consolidated_summary.greeting", name: @user.name) %></p>
+<p><%= t("order_mailer.consolidated_summary.summary") %></p>
+
+<% @orders.each do |order| %>
+  <div style="border: 1px solid #ccc; padding: 10px; margin: 12px 0;">
+    <h3><%= t("order_mailer.consolidated_summary.order", id: order.id, date: l(order.created_at.to_date)) %></h3>
+    <% order.line_items.each do |item| %>
+      <p>
+        <strong><%= item.product.title %></strong> -
+        <%= t("order_mailer.received.quantity", quantity: item.quantity) %>,
+        <%= t("order_mailer.received.price", price: number_to_currency(item.product.price)) %>,
+        <%= t("order_mailer.received.total", total: number_to_currency(item.total_price)) %>
+      </p>
+    <% end %>
+    <p><strong><%= t("order_mailer.received.total", total: number_to_currency(order.total_amount)) %></strong></p>
+  </div>
+<% end %>
+
+<p><strong><%= t("order_mailer.consolidated_summary.total_orders", count: @orders.count) %></strong></p>

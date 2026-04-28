@@ -1,7 +1,7 @@
 <%= form_with(model: user, class: "contents") do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= t("errors.template.header", count: user.errors.count, model: User.model_name.human) %></h2>
 
       <ul class="list-disc ml-6">
         <% user.errors.each do |error| %>
@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <h2>Enter User Details</h2>
+  <h2><%= t("users.form.enter_details") %></h2>
 
   <div class="my-5">
     <%= form.label :name, 'Name:' %>
@@ -53,6 +53,11 @@
     <%= form.password_field :password_confirmation,
     id: :user_password_confirmation,
     class: "input-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :language, t("users.form.language") %>
+    <%= form.select :language, options_for_select([[t("users.form.english"), "en"], [t("users.form.hindi"), "hi"]], user.language || "en"), {}, class: "input-field" %>
   </div>
 
   <fieldset class="border border-gray-200 rounded-md p-4 my-5">

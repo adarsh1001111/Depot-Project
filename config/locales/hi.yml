@@ -1,0 +1,166 @@
+hi:
+  layouts:
+    application:
+      title: "प्राग्मैटिक पुस्तकालय"
+      home: "होम"
+      questions: "प्रश्न"
+      news: "समाचार"
+      contact: "संपर्क"
+
+  store:
+    index:
+      title_html: "आपका प्राग्मैटिक कैटलॉग"
+    product:
+      add_html: "कार्ट में जोड़ें"
+
+  carts:
+    cart:
+      title: "आपका कार्ट"
+      empty: "खाली कार्ट"
+      checkout: "चेकआउट"
+
+  orders:
+    new:
+      legend: "कृपया अपनी जानकारी दर्ज करें"
+    form:
+      name: "नाम"
+      address_html: "पता"
+      email: "ईमेल"
+      pay_type: "भुगतान प्रकार"
+      pay_prompt_html: "भुगतान विधि चुनें"
+      submit: "ऑर्डर दें"
+      pay_types:
+        "Check": "चेक"
+        "Credit card": "क्रेडिट कार्ड"
+        "Purchase order": "खरीद आदेश"
+      check:
+        routing_number: "रूटिंग नंबर"
+        account_number: "खाता नंबर"
+      cc:
+        cc_number: "नंबर"
+        expiration_date: "समाप्ति तिथि"
+
+  order_mailer:
+    received:
+      subject: "आपका ऑर्डर पुष्टि - प्राग्मैटिक स्टोर"
+      greeting: "नमस्ते %{name},"
+      thank_you: "आपके ऑर्डर के लिए धन्यवाद।"
+      order_details: "ऑर्डर विवरण:"
+      line_item: "लाइन आइटम %{index}:"
+      product: "उत्पाद: %{title}"
+      quantity: "मात्रा: %{quantity}"
+      price: "मूल्य: %{price}"
+      total: "कुल: %{total}"
+      attachments: "अतिरिक्त उत्पाद छवियां संलग्न हैं।"
+    consolidated_summary:
+      subject: "आपके सभी ऑर्डर का सारांश"
+      greeting: "नमस्ते %{name},"
+      summary: "यहां आपके सभी ऑर्डर का सारांश है:"
+      order: "ऑर्डर #%{id} (%{date}):"
+      total_orders: "कुल ऑर्डर: %{count}"
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "नाम आवश्यक है"
+              taken: "यह नाम पहले से लिया जा चुका है"
+            email_address:
+              blank: "ईमेल पता आवश्यक है"
+              taken: "यह ईमेल पता पहले से लिया जा चुका है"
+            language:
+              inclusion: "%{value} एक वैध भाषा नहीं है"
+        order:
+          attributes:
+            name:
+              blank: "नाम आवश्यक है"
+            address:
+              blank: "पता आवश्यक है"
+            email:
+              blank: "ईमेल आवश्यक है"
+            pay_type:
+              inclusion: "अवैध भुगतान प्रकार"
+        product:
+          attributes:
+            title:
+              blank: "शीर्षक आवश्यक है"
+              taken: "यह शीर्षक पहले से लिया जा चुका है"
+              too_short: "शीर्षक कम से कम 10 वर्ण का होना चाहिए"
+            description:
+              blank: "विवरण आवश्यक है"
+            price:
+              numericality: "मूल्य एक संख्या होनी चाहिए"
+            images:
+              blank: "छवियां संलग्न होनी चाहिए"
+
+  number:
+    currency:
+      format:
+        unit: "₹"
+        precision: 2
+        separator: "."
+        delimiter: ","
+        format: "%u%n"
+
+  users:
+    form:
+      enter_details: "उपयोगकर्ता विवरण दर्ज करें"
+      language: "भाषा वरीयता"
+      english: "अंग्रेज़ी"
+      hindi: "हिंदी"
+
+  flash:
+    application:
+      translation_not_available: "%{locale} भाषा उपलब्ध नहीं है"
+    admin:
+      not_authorized: "आपको इस सेक्शन तक पहुंच की अनुमति नहीं है"
+    authentication:
+      session_expired: "निष्क्रियता के कारण आपका सत्र समाप्त हो गया है।"
+    categories:
+      not_found: "श्रेणी नहीं मिली"
+    sessions:
+      try_later: "कृपया बाद में प्रयास करें।"
+      invalid_credentials: "कोई अन्य ईमेल पता या पासवर्ड आज़माएं।"
+    passwords:
+      try_later: "कृपया बाद में प्रयास करें।"
+      instructions_sent: "पासवर्ड रीसेट निर्देश भेज दिए गए हैं (यदि इस ईमेल पते वाला उपयोगकर्ता मौजूद है)।"
+      reset_success: "पासवर्ड रीसेट हो गया है।"
+      mismatch: "पासवर्ड मेल नहीं खाते।"
+      invalid_or_expired: "पासवर्ड रीसेट लिंक अमान्य है या समाप्त हो चुका है।"
+    carts:
+      created: "कार्ट सफलतापूर्वक बनाया गया।"
+      updated: "कार्ट सफलतापूर्वक अपडेट किया गया।"
+      empty: "आपका कार्ट वर्तमान में खाली है"
+      invalid: "अमान्य कार्ट"
+    orders:
+      updated: "ऑर्डर सफलतापूर्वक अपडेट किया गया।"
+      destroyed: "ऑर्डर सफलतापूर्वक हटाया गया।"
+      cart_empty: "आपका कार्ट खाली है"
+    products:
+      created: "उत्पाद सफलतापूर्वक बनाया गया।"
+      updated: "उत्पाद सफलतापूर्वक अपडेट किया गया।"
+      destroyed: "उत्पाद सफलतापूर्वक हटाया गया।"
+      image_removed: "छवि सफलतापूर्वक हटाई गई।"
+    line_items:
+      updated: "लाइन आइटम सफलतापूर्वक अपडेट किया गया।"
+      destroyed: "लाइन आइटम सफलतापूर्वक हटाया गया।"
+    users:
+      created: "उपयोगकर्ता %{name} सफलतापूर्वक बनाया गया।"
+      updated: "उपयोगकर्ता %{name} सफलतापूर्वक अपडेट किया गया।"
+      destroyed: "उपयोगकर्ता सफलतापूर्वक हटाया गया।"
+
+  errors:
+    messages:
+      must_be_selected: "चयन करना आवश्यक है"
+      line_item_unique_in_cart: "कार्ट में एक उत्पाद केवल एक बार जोड़ा जा सकता है"
+      must_be_attached: "संलग्न होना आवश्यक है"
+      too_many_images: "3 से अधिक छवियां नहीं हो सकतीं"
+      invalid_image_type: "GIF, JPG, PNG या WEBP होना चाहिए"
+      price_must_exceed_discount: "मूल्य डिस्काउंट मूल्य से अधिक होना चाहिए"
+      description_word_count_invalid: "5 से 10 शब्दों के बीच होना चाहिए"
+      line_items_present: "लाइन आइटम मौजूद हैं"
+      root_category_with_subcategories: "उपश्रेणियों वाली रूट श्रेणी में नई श्रेणी नहीं जोड़ी जा सकती"
+      subcategory_cannot_have_children: "उपश्रेणी की अपनी कोई चाइल्ड श्रेणी नहीं हो सकती"
+      cannot_add_subcategory_to_subcategory: "उपश्रेणी के अंदर दूसरी उपश्रेणी नहीं जोड़ी जा सकती"

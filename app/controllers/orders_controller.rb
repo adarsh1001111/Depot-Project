@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to @order, notice: "Order was successfully updated.", status: :see_other }
+        format.html { redirect_to @order, notice: t("flash.orders.updated"), status: :see_other }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
     @order.destroy!
 
     respond_to do |format|
-      format.html { redirect_to orders_path, notice: "Order was successfully destroyed.", status: :see_other }
+      format.html { redirect_to orders_path, notice: t("flash.orders.destroyed"), status: :see_other }
       format.json { head :no_content }
     end
   end
@@ -80,7 +80,7 @@ class OrdersController < ApplicationController
 
     def ensure_cart_isnt_empty
       if @cart.line_items.empty?
-        redirect_to store_index_url, notice: "Your cart is empty"
+        redirect_to store_index_url, notice: t("flash.orders.cart_empty")
       end
     end
     def pay_type_params

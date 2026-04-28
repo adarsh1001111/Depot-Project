@@ -4,6 +4,6 @@ class CategoriesController < ApplicationController
     category_ids = [ @category.id ] + @category.subcategories.pluck(:id)
     @books = Product.where(category_id: category_ids).includes(:category)
   rescue ActiveRecord::RecordNotFound
-    redirect_to store_index_path, alert: "Category not found"
+    redirect_to store_index_path, alert: t("flash.categories.not_found")
   end
 end

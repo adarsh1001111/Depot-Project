@@ -16,7 +16,7 @@ class Product < ApplicationRecord
   # The above line tells Rails to broadcast changes to the product model to any clients that are listening.
 
   validates :title, :description, presence: true
-  validates :category, presence: { message: "must be selected" }
+  validates :category, presence: { message: :must_be_selected }
   validates :price, numericality: { greater_than_or_equal_to: 0.01, greater_than: :discount_price }, allow_nil: true
   validates :title, uniqueness: true
   validates :title, length: { minimum: 10 }
@@ -25,7 +25,7 @@ class Product < ApplicationRecord
   validates :permalink, uniqueness: true,
     format: { with: PERMALINK_REGEX }
   validate :words_in_description
-  validates :description, format: { with: FIVE_TO_TEN_WORDS_REGEX, message: "must be between 5 to 10 words long." }, allow_nil: true
+  validates :description, format: { with: FIVE_TO_TEN_WORDS_REGEX, message: :description_word_count_invalid }, allow_nil: true
   validates :image_url, url: true
 
   # custom validator method for price and discount
@@ -55,7 +55,7 @@ class Product < ApplicationRecord
   end
 
   private def images_presence
-    errors.add(:images, "must be attached") unless image.attached? || images.attached?
+    errors.add(:images, :must_be_attached) unless image.attached? || images.attached?
   end
 
   private def acceptable_images
@@ -63,20 +63,20 @@ class Product < ApplicationRecord
 
     all_images = self.all_images
     if all_images.count > 3
-      errors.add(:images, "cannot be more than 3")
+      errors.add(:images, :too_many_images)
     end
 
     acceptable_types = [ "image/gif", "image/jpeg", "image/png", "image/webp" ]
     all_images.each do |image_attachment|
       unless acceptable_types.include?(image_attachment.content_type)
-        errors.add(:images, "must be a GIF, JPG, PNG or WEBP")
+        errors.add(:images, :invalid_image_type)
       end
     end
   end
 
   private def ensure_discount_less_than_price
     if price != nil && price < discount_price
-      errors.add(:price, "price should be greater than discount_price")
+      errors.add(:price, :price_must_exceed_discount)
     end
   end
 
@@ -86,13 +86,13 @@ class Product < ApplicationRecord
 
       return if description_words_array.length.between?(5, 10)
     end
-      errors.add(:description, "description should be between 5 to 10 words")
+      errors.add(:description, :description_word_count_invalid)
   end
 
   # ensure that there are no line items referencing this product
   private def ensure_not_referenced_by_any_line_item
     unless line_items.empty?
-      errors.add(:base, "Line Items present")
+      errors.add(:base, :line_items_present)
       throw :abort
     end
   end

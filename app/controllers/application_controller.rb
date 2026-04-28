@@ -8,14 +8,15 @@ class ApplicationController < ActionController::Base
   include ActiveStorage::SetCurrent
 
   def set_i18n_locale_from_params
-    if params[:locale]
-      if I18n.available_locales.map(&:to_s).include?(params[:locale])
-        I18n.locale = params[:locale]
-      else
-        flash.now[:notice] =
-          "#{params[:locale]} translation not available"
-        logger.error flash.now[:notice]
-      end
+    requested_locale = params[:locale].presence || Current.user&.language || I18n.default_locale
+    requested_locale = requested_locale.to_s
+
+    if I18n.available_locales.map(&:to_s).include?(requested_locale)
+      I18n.locale = requested_locale
+    else
+      I18n.locale = I18n.default_locale
+      flash.now[:notice] = I18n.t("flash.application.translation_not_available", locale: requested_locale)
+      logger.error flash.now[:notice]
     end
   end
 

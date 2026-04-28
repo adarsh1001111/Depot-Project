@@ -25,7 +25,7 @@ module Authentication
     def check_session_timeout
       if authenticated? && session_timed_out?
         terminate_session
-        redirect_to new_session_path, alert: "Your session has expired due to inactivity."
+        redirect_to new_session_path, alert: I18n.t("flash.authentication.session_expired")
       end
     end
 

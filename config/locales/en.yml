@@ -35,19 +35,95 @@ en:
       questions: "Questions"
       news: "News"
       contact: "Contact"
-  
+
   store:
     index:
       title_html: "Your Pragmatic Catalog"
     product:
       add_html: "Add to Cart"
-  
+
   carts:
     cart:
       title: "Your Cart"
       empty: "Empty cart"
       checkout: "Checkout"
-  
+
+  orders:
+    new:
+      legend: "Please Enter Your Details"
+    form:
+      name: "Name"
+      address_html: "Address"
+      email: "E-mail"
+      pay_type: "Pay with"
+      pay_prompt_html: "Select a payment method"
+      submit: "Place Order"
+      pay_types:
+        "Check": "Check"
+        "Credit card": "Credit card"
+        "Purchase order": "Purchase order"
+      check:
+        routing_number: "Routing #"
+        account_number: "Account #"
+      cc:
+        cc_number: "Number"
+        expiration_date: "Expiration"
+
+  order_mailer:
+    received:
+      subject: "Pragmatic Store Order Confirmation"
+      greeting: "Dear %{name},"
+      thank_you: "Thank you for your order."
+      order_details: "Order Details:"
+      line_item: "Line Item %{index}:"
+      product: "Product: %{title}"
+      quantity: "Quantity: %{quantity}"
+      price: "Price: %{price}"
+      total: "Total: %{total}"
+      attachments: "Additional product images are attached."
+    consolidated_summary:
+      subject: "Summary of All Your Orders"
+      greeting: "Dear %{name},"
+      summary: "Here is a summary of all your orders:"
+      order: "Order #%{id} (%{date}):"
+      total_orders: "Total Orders: %{count}"
+
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "Name is required"
+              taken: "This name has already been taken"
+            email_address:
+              blank: "Email address is required"
+              taken: "This email address has already been taken"
+            language:
+              inclusion: "%{value} is not a valid language"
+        order:
+          attributes:
+            name:
+              blank: "Name is required"
+            address:
+              blank: "Address is required"
+            email:
+              blank: "Email is required"
+            pay_type:
+              inclusion: "is not a valid payment type"
+        product:
+          attributes:
+            title:
+              blank: "Title is required"
+              taken: "This title has already been taken"
+              too_short: "Title must be at least 10 characters long"
+            description:
+              blank: "Description is required"
+            price:
+              numericality: "must be a number"
+            images:
+              blank: "Images must be attached"
+
   number:
     currency:
       format:
@@ -56,7 +132,16 @@ en:
         separator: "."
         delimiter: ","
         format: "%u%n"
-  
+
+  number:
+    currency:
+      format:
+        unit: "$"
+        precision: 2
+        separator: "."
+        delimiter: ","
+        format: "%u%n"
+
   orders:
     new:
       legend: "Please Enter Your Details"
@@ -81,3 +166,64 @@ en:
         po_number: "PO #"
 
   thanks: "Thank you for your order"
+
+  users:
+    form:
+      enter_details: "Enter User Details"
+      language: "Language Preference"
+      english: "English"
+      hindi: "Hindi"
+
+  flash:
+    application:
+      translation_not_available: "%{locale} translation not available"
+    admin:
+      not_authorized: "You don't have privilege to access this section"
+    authentication:
+      session_expired: "Your session has expired due to inactivity."
+    categories:
+      not_found: "Category not found"
+    sessions:
+      try_later: "Try again later."
+      invalid_credentials: "Try another email address or password."
+    passwords:
+      try_later: "Try again later."
+      instructions_sent: "Password reset instructions sent (if user with that email address exists)."
+      reset_success: "Password has been reset."
+      mismatch: "Passwords did not match."
+      invalid_or_expired: "Password reset link is invalid or has expired."
+    carts:
+      created: "Cart was successfully created."
+      updated: "Cart was successfully updated."
+      empty: "Your cart is currently empty"
+      invalid: "Invalid cart"
+    orders:
+      updated: "Order was successfully updated."
+      destroyed: "Order was successfully destroyed."
+      cart_empty: "Your cart is empty"
+    products:
+      created: "Product was successfully created."
+      updated: "Product was successfully updated."
+      destroyed: "Product was successfully destroyed."
+      image_removed: "Image removed successfully."
+    line_items:
+      updated: "Line item was successfully updated."
+      destroyed: "Line item was successfully destroyed."
+    users:
+      created: "User %{name} was successfully created."
+      updated: "User %{name} was successfully updated."
+      destroyed: "User was successfully destroyed."
+
+  errors:
+    messages:
+      must_be_selected: "must be selected"
+      line_item_unique_in_cart: "one product can be added only once in the cart"
+      must_be_attached: "must be attached"
+      too_many_images: "cannot be more than 3"
+      invalid_image_type: "must be a GIF, JPG, PNG or WEBP"
+      price_must_exceed_discount: "price should be greater than discount price"
+      description_word_count_invalid: "must be between 5 to 10 words long"
+      line_items_present: "Line Items present"
+      root_category_with_subcategories: "cannot add category to a root category having subcategories"
+      subcategory_cannot_have_children: "subcategory cannot have any child category"
+      cannot_add_subcategory_to_subcategory: "cannot add subcategory to a subcategory"

@@ -43,7 +43,7 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
-        format.html { redirect_to @line_item, notice: "Line item was successfully updated.", status: :see_other }
+        format.html { redirect_to @line_item, notice: t("flash.line_items.updated"), status: :see_other }
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +57,7 @@ class LineItemsController < ApplicationController
     @line_item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to line_items_path, notice: "Line item was successfully destroyed.", status: :see_other }
+      format.html { redirect_to line_items_path, notice: t("flash.line_items.destroyed"), status: :see_other }
       format.json { head :no_content }
     end
   end

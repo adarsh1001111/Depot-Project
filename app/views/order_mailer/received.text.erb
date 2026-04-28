@@ -1,9 +1,20 @@
-Dear <%= @order.name %>
+<%= t('order_mailer.received.greeting', name: @order.name) %>
 
-Thank you for your recent order from The Pragmatic Store.
+<%= t('order_mailer.received.thank_you') %>
 
-You ordered the following items:
+<%= t('order_mailer.received.order_details') %>
 
-<%= render @order.line_items -%>
+<% @order.line_items.each_with_index do |item, index| %>
+<%= t('order_mailer.received.line_item', index: index + 1) %>
+<%= t('order_mailer.received.product', title: item.product.title) %>
+<%= t('order_mailer.received.quantity', quantity: item.quantity) %>
+<%= t('order_mailer.received.price', price: number_to_currency(item.product.price)) %>
+<%= t('order_mailer.received.total', total: number_to_currency(item.total_price)) %>
 
-We'll send you a separate e-mail when your order ships.
+<% end %>
+
+<%= t('order_mailer.received.total', total: number_to_currency(@order.total_amount)) %>
+
+<% if @order.line_items.any? { |item| item.product.images.attached? && item.product.images.size > 1 } %>
+<%= t('order_mailer.received.attachments') %>
+<% end %>
