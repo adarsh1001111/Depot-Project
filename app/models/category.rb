@@ -10,7 +10,13 @@ class Category < ApplicationRecord
   validates :name, uniqueness: { scope: :category_id }, allow_nil: true
   validate :single_level_nesting
 
-  private def single_level_nesting
+  def products_count
+    products.count + subcategory_products.count
+  end
+
+  private
+
+  def single_level_nesting
     if subcategories.any?
       self.subcategories.each do |s|
         if s.subcategories.any?

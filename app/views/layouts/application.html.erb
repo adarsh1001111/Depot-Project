@@ -70,5 +70,19 @@
         <%= yield %>
       </main>
     </section>
+
+    <footer class="bg-white text-black py-4 mt-8 border-t border-gray-200">
+      <div class="container mx-auto px-5">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-sm font-medium">Hit Counter: <%= session[:hit_count] || 0 %></p>
+            <p class="text-sm font-medium">Your IP address is: <%= request.remote_ip %></p>
+          </div>
+          <div class="text-sm text-gray-600">
+            © 2024 Depot Store
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

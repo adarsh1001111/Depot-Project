@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   get "admin" => "admin#index"
   get "up" => "rails/health#show", as: :rails_health_check
 
+  namespace :admin do
+    resources :reports, only: [:index]
+    resources :categories, only: [:index]
+  end
+
   resources :users do
     get :orders, on: :collection
     get :line_items, on: :collection
