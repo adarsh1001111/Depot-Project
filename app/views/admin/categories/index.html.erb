@@ -16,7 +16,7 @@
         <% @categories.each do |category| %>
           <tr>
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              <%= category.name %>
+              <%= link_to category.name, category_books_path(category), class: "text-blue-600 hover:underline" %>
             </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
               <%= category.category&.name || "Root Category" %>

@@ -5,9 +5,6 @@ class ApplicationController < ActionController::Base
   after_action :set_response_time_header
 
   include Authentication
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
-
   include ActiveStorage::SetCurrent
 
   def set_i18n_locale_from_params
